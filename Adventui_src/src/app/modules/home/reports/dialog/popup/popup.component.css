@@ -1,0 +1,7 @@
+h2 {
+    color: #dc3545;
+}
+.custom-dialog-container .mat-dialog-container {
+
+    overflow: hidden!important;
+}

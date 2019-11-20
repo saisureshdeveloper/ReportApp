@@ -1,0 +1,30 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Select Grid Columns</h4>
+  <button type="button" class="btn btn-sm btn-primary my-1 ml-3" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form>
+    <div class="form-group" style="max-height: 400px;overflow: scroll;overflow-x: hidden;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col"><input type="checkbox"  [checked]="allselected" (change)="reset(!allselected)"></th>
+            <th scope="col">Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let c of availableGridColumns">
+            <th scope="row"><input type="checkbox" [disabled]="c.isDefault" [checked]="c.isSelected" (change)="c.isSelected = !c.isSelected"></th>
+            <td>{{c.title}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-sm btn-primary my-1 ml-3" (click)="reset(false)">Reset</button>
+  <button type="button" class="btn btn-sm btn-primary my-1 ml-3" (click)="save()">Save</button>
+</div>

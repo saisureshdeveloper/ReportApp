@@ -1,0 +1,94 @@
+<div class="row">
+    <div class="col-lg-6">
+
+        <h2>ERP Statement 
+
+                <button (click)="exportAsXLSX(listERP,'ERP Statement')" style="float:right;"><i class="fa fa-file-excel-o"></i></button>
+
+        </h2>
+        <ag-grid-angular #agGrid id="grid1" style="width: 580px; height: 410PX;" class="ag-theme-balham" 
+       
+        [rowData]="listERP" 
+        [columnDefs]="ERPcolumnDefs" 
+        
+        [animateRows]="true"
+        [enableFilter]="true"
+        
+        (gridReady)="onGridReadyERP($event)"
+        >
+        </ag-grid-angular>
+        <!-- <table class="table table-condensed" style="    display: block;
+        height: 410px;
+        font-size: 13px;
+        overflow-y: scroll;" scrollY="true" maxHeight="200" bordered="true">
+            <thead>
+                <tr>
+                    <th>Document ID</th>
+                    <th>Date</th>
+                    <th>Text</th>
+                    <th>Debit Amount</th>
+                    <th>Credit Amount</th>
+                    <th>Vendor Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of listERP;">
+                    <td>{{ item.documnet_id}}</td>
+                    <td>{{ item.documnet_date}}</td>
+                    <td>{{ item.document_text}}</td>
+                    <td>{{ item.debit}}</td>
+                    <td>{{ item.credit}}</td>
+                    <td>{{ item.vendor_name}}</td>
+                </tr>
+
+            </tbody>
+        </table> -->
+
+    </div>
+    <div class="col-lg-6">
+         
+
+        <h2>Bank Statement 
+                <button (click)="exportAsXLSX(listBank,'Bank Statement')" style="float:right;"><i class="fa fa-file-excel-o"></i></button>
+
+        </h2>
+        <ag-grid-angular id="grid2" style="width: 580px; height: 410PX;" class="ag-theme-balham" 
+        [columnDefs]="BankcolumnDefs"
+        [rowData]="listBank" 
+
+        [animateRows]="true"
+        [enableFilter]="true"
+        
+        (gridReady)="onGridReadyBank($event)"
+        >
+        </ag-grid-angular>
+        <!-- <table class="table table-condensed" style="display: block;
+    height: 410px;
+    font-size: 13px;
+    overflow-y: scroll;" scrollY="true" maxHeight="200" bordered="true">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Debit Amount</th>
+                    <th>Credit Amount</th>
+                    <th>Bank Statement ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of listBank;">
+                    <td>{{ item.document_date}}</td>
+                    <td>{{ item.document_decription}}</td>
+                    <td>{{ item.debitAmount}}</td>
+                    <td>{{ item.creditAmount}}</td>
+                    <td>{{ item.bank_statement_id}}</td>
+
+                </tr>
+
+            </tbody>
+        </table> -->
+
+    </div>
+
+
+</div>

@@ -1,0 +1,379 @@
+<ngx-smart-modal 
+  #autoPostingModal 
+  identifier="autoPostingModal"
+  [customClass]="'nsm-dialog-animation-ltr'"
+  [closable]=false
+  [escapable]=false
+  [backdrop]=false
+  [dismissable]=false
+>
+<div *ngIf="autoPostingModal.hasData()">
+  <h5 class="h5-title">Mark for Posting</h5>
+  <div class="txn-date">
+    <label for="txnDate" class="mr-2">Transaction Date</label>
+    <div class="input-group txn-calender">
+      <input class="form-control" style="width: 110px;height: 31px;background-color: white;" readonly placeholder="dd-mmm-yyyy" name="txn"
+      [(ngModel)]="txnDate" ngbDatepicker #fd="ngbDatepicker" id="txnDate">
+      <div class="input-group-append">
+        <button class="btn btn-sm fa fa-calendar" (click)="fd.toggle()" type="button"></button>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="description" class="description" >Description</label>
+    <textarea class="form-control description" rows="5" id="description" placeholder="Write description..." [(ngModel)]="description"></textarea>
+  </div>
+  <label class="amount-label">Amount : {{ amount | formatter }}</label>
+  <div class="form-group">
+    <label for="comments" class="comments">Comments</label>
+    <textarea class="form-control comments" id="comments" rows="5" placeholder="Write comments..." [(ngModel)]="comments"></textarea>
+  </div>
+  <div class="action-btns">
+    <button type="button" class="btn btn-sm btn-primary btns-submit"
+          (click)="onSubmit();autoPostingModal.close();">Submit</button>
+    <button type="button" class="btn btn-sm btn-primary btns-cancel"
+          (click)="autoPostingModal.close()">Cancel</button>
+  </div>
+</div>
+</ngx-smart-modal>
+
+<ngx-smart-modal 
+  #confirmAutoPostModal 
+  identifier="confirmAutoPostModal"
+  [customClass]="'nsm-dialog-animation-ttb'"
+  [closable]=false
+  [escapable]=false
+  [backdrop]=false
+  [dismissable]=false
+>
+<div *ngIf="confirmAutoPostModal.hasData()">
+  <p>{{ text }}</p>
+  <div class="action-btns">
+    <button type="button" class="btn btn-sm btn-primary btns-yes"
+          (click)="confirmAutoPostModal.close(); smartModalService.getModal('autoPostingModal').open()">Yes</button>
+    <button type="button" class="btn btn-sm btn-primary btns-no"
+          (click)="confirmAutoPostModal.close()">No</button>
+  </div>
+</div>
+</ngx-smart-modal>
+
+<ngx-smart-modal 
+  #confirmUnGroup 
+  identifier="confirmUnGroup"
+  [customClass]="'nsm-dialog-animation-ttb'"
+  [closable]=false
+  [escapable]=false
+  [backdrop]=false
+  [dismissable]=false
+>
+<div *ngIf="confirmUnGroup.hasData()">
+  <p>{{ text }}</p>
+  <div class="action-btns">
+    <button type="button" class="btn btn-sm btn-primary btns-yes"
+          (click)="confirmUnGroup.close(); callUnGroup()">Yes</button>
+    <button type="button" class="btn btn-sm btn-primary btns-no"
+          (click)="confirmUnGroup.close()">No</button>
+  </div>
+</div>
+</ngx-smart-modal>
+
+<ngx-smart-modal 
+  #confirmMatch 
+  identifier="confirmMatch"
+  [customClass]="'nsm-dialog-animation-ttb'"
+  [closable]=false
+  [escapable]=false
+  [backdrop]=false
+  [dismissable]=false
+>
+<div *ngIf="confirmMatch.hasData()">
+  <p>{{ text }}</p>
+  <div class="action-btns">
+    <button type="button" class="btn btn-sm btn-primary btns-yes"
+          (click)="confirmMatch.close(); callMatch()">Yes</button>
+    <button type="button" class="btn btn-sm btn-primary btns-no"
+          (click)="confirmMatch.close()">No</button>
+  </div>
+</div>
+</ngx-smart-modal>
+
+<ngx-smart-modal 
+  #confirmPostRecords 
+  identifier="confirmPostRecords"
+  [customClass]="'nsm-dialog-animation-ttb'"
+  [closable]=false
+  [escapable]=false
+  [backdrop]=false
+  [dismissable]=false
+>
+<div *ngIf="confirmPostRecords.hasData()">
+  <p>{{ text }}</p>
+  <div class="action-btns">
+    <button type="button" class="btn btn-sm btn-primary btns-yes"
+          (click)="confirmPostRecords.close(); callPostRecords()">Yes</button>
+    <button type="button" class="btn btn-sm btn-primary btns-no"
+          (click)="confirmPostRecords.close()">No</button>
+  </div>
+</div>
+</ngx-smart-modal>
+
+<ngx-smart-modal 
+  #confirmViewReject 
+  identifier="confirmViewReject"
+  [customClass]="'nsm-dialog-animation-ttb'"
+  [closable]=false
+  [escapable]=false
+  [backdrop]=false
+  [dismissable]=false
+>
+<div *ngIf="confirmViewReject.hasData()">
+  <p>{{ text }}</p>
+  <div class="action-btns">
+    <button type="button" class="btn btn-sm btn-primary btns-yes"
+          (click)="confirmViewReject.close(); callViewReject()">Yes</button>
+    <button type="button" class="btn btn-sm btn-primary btns-no"
+          (click)="confirmViewReject.close()">No</button>
+  </div>
+</div>
+</ngx-smart-modal>
+
+<ngx-smart-modal 
+  #confirmViewPost
+  identifier="confirmViewPost"
+  [customClass]="'nsm-dialog-animation-ttb'"
+  [closable]=false
+  [escapable]=false
+  [backdrop]=false
+  [dismissable]=false
+>
+<div *ngIf="confirmViewPost.hasData()">
+  <p>{{ text }}</p>
+  <div class="action-btns">
+    <button type="button" class="btn btn-sm btn-primary btns-yes"
+          (click)="confirmViewPost.close(); callViewPost()">Yes</button>
+    <button type="button" class="btn btn-sm btn-primary btns-no"
+          (click)="confirmViewPost.close()">No</button>
+  </div>
+</div>
+</ngx-smart-modal>
+
+<ngx-smart-modal 
+  #confirmViewEdit
+  identifier="confirmViewEdit"
+  [customClass]="'nsm-dialog-animation-ttb confirmViewEdit'"
+  [closable]=false
+  [escapable]=false
+  [backdrop]=false
+  [dismissable]=false
+>
+<div *ngIf="confirmViewEdit.hasData()">
+  <div class="edit-main">
+    <div class="row edit-col">
+      <div class="col-sm-6 col-lg-6 edit-col-1">
+        <p>CounterParty-Internal Account (ERP)</p>
+        <div class="row">
+          <label class="edit-label col-sm-6 col-lg-6">Account Number:</label>      
+            <div class="edit-label col-sm-6 col-lg-6">
+            <select style="width: 150px" id="accountErp" #accountErp (change)="onSelectedInternalAccountEdit(accountErp.value)">
+              <option value="" selected>Please select...</option>
+              <option *ngFor="let val of ineternalAccounts" [value]="val.AccounName">
+                {{val.ReferenceNum}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <label class="edit-label col-sm-6 col-lg-6">Account Name :</label>
+          <span class="edit-label col-sm-6 col-lg-6">{{ editERPAccountName }}</span>
+        </div>
+        <div class="row">
+          <label class="edit-label col-sm-6 col-lg-6">D/C Flag :</label>
+          <div class="edit-label col-sm-6 col-lg-6">
+            <select style="width: 150px" id="dcflag" #dcflag (change)="onSelectedDCFlag(dcflag.value)">
+              <option value="" selected>Please select...</option>
+              <option *ngFor="let dc of dcFlagArray" [value]="dc === 'Credit' ? 'Debit' : 'Credit'">
+                {{dc}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-6 edit-col-2">
+        <p>CounterParty-Bank</p>
+        <div class="row">
+          <label class="edit-label col-sm-6 col-lg-6">Account Number :</label>
+          <span class="edit-label col-sm-6 col-lg-6">{{ requiredModalEditData?.bankAccountNumber }}</span>
+        </div>
+        <div class="row">
+          <label class="edit-label col-sm-6 col-lg-6">Account Name :</label>
+          <span class="edit-label col-sm-6 col-lg-6">{{ requiredModalEditData?.bankAccountName }}</span>
+        </div>
+        <div class="row">
+          <label class="edit-label col-sm-6 col-lg-6">D/C Flag :</label>
+          <span class="edit-label col-sm-6 col-lg-6">{{ editERPSelectDCFlag }}</span>
+        </div>     
+        
+      </div>
+    </div>
+    <div class="row edit-col-3">
+      <label class="col-sm-6 col-lg-6 edit-label">Narration: {{ requiredModalEditData?.narration }}</label>
+      <label class="col-sm-6 col-lg-6 edit-label">Amount: {{ requiredModalEditData?.amount }}</label>
+    </div>
+    <div class="row edit-col-4">
+      <label class="col-sm-6 col-lg-6 edit-label">Cost Center: {{ amount }}</label>
+      <label class="col-sm-6 col-lg-6 edit-label">Business Area: {{ amount }}</label>
+    </div>
+    <div class="form-group">
+      <label for="comments" class="comments">Comments</label>
+      <textarea class="form-control comments" id="comments" rows="5" placeholder="Write comments..." [(ngModel)]="comments"></textarea>
+    </div> 
+  </div>
+  <div class="action-btns">
+    <button type="button" class="btn btn-sm btn-primary btns-yes"
+          (click)="callViewEdit()">Save</button>
+    <button type="button" class="btn btn-sm btn-primary btns-no"
+          (click)="callViewEditClose()">Cancel</button>
+  </div>
+</div>
+</ngx-smart-modal>
+
+<ngx-smart-modal 
+  #confirmViewSplit
+  identifier="confirmViewSplit"
+  [customClass]="'nsm-dialog-animation-ttb confirmViewSplit'"
+  [closable]=false
+  [escapable]=false
+  [backdrop]=false
+  [dismissable]=false
+>
+<div *ngIf="confirmViewSplit.hasData()">
+  <div class="edit-main">
+    <div class="row">
+      <div class="col-sm-5 col-lg-5">
+        <label class="edit-label">Split Amount of : {{ requiredModalEditData?.amount }}</label>
+      </div>
+      <div class="col-sm-5 col-lg-5">
+        <div class="row">
+          <label class="edit-label split-dc-label col-sm-5 col-lg-5">D/C Flag :</label>
+          <div class="edit-label split-dc-select col-sm-7 col-lg-7">
+            <select style="width: 150px" id="dcflag" #dcflag (change)="onSelectedDCFlag(dcflag.value, true)">
+              <option value="" selected>Please select...</option>
+              <option *ngFor="let dc of dcFlagArray" [value]="dc === 'Credit' ? 'Debit' : 'Credit'">
+                {{dc}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="split-icons col-sm-2 col-lg-2">
+        <span class="fa fa-plus" data-toggle="tooltip" data-placement="bottom" title="Add Row" (click)="splitAddRow()"></span>
+        
+      </div>
+    </div>
+    <!--  table -->
+
+    <table id="splitTable">
+      <tr>
+        <th></th>
+        <th>Account Number</th>
+        <th>D/C Flag</th>
+        <th>Amount</th>
+        <th>Comments</th>
+      </tr>
+      <tr *ngFor="let o of splitedRows; let ix = index">
+        <td>
+          <span class="fa fa-times" data-toggle="tooltip" data-placement="bottom" title="Delete Row" (click)="splitDeleteRow(ix)"></span>
+        </td>
+        <td>
+          <div>
+            <select style="width: 150px" id="accountErp" #accountErp (change)="onSelectedInternalAccountEdit(accountErp.value, o, ix)">
+              <option value="" selected>Please select...</option>
+              <option *ngFor="let val of ineternalAccounts" [value]="val.AccounName">
+                {{val.ReferenceNum}}
+              </option>
+            </select>
+          </div>
+        </td>
+        <td>{{ editERPSelectDCFlag }}</td>
+        <td>
+          <div>
+            <input style="width: 100px;" type="number" [(ngModel)]="o.SplitAmount" />
+          </div>
+        </td>
+        <td>
+          <div>
+            <input style="width: 190px;" type="text" placeholder="Write..." [(ngModel)]="o.Comment" />
+          </div>
+        </td>
+    </table>
+  </div>
+  <div class="action-btns split-btns">
+    <button type="button" class="btn btn-sm btn-primary btns-reset"
+      (click)="callViewSplitReset()">Reset</button>
+    <button type="button" class="btn btn-sm btn-primary btns-yes"
+      (click)="callViewSplit()">Save</button>
+    <button type="button" class="btn btn-sm btn-primary"
+      (click)="confirmViewSplit.close()">Cancel</button>
+  </div>
+</div>
+</ngx-smart-modal>
+
+<ngx-smart-modal 
+  #confirmContra
+  identifier="confirmContra"
+  [customClass]="'nsm-dialog-animation-ttb'"
+  [closable]=false
+  [escapable]=false
+  [backdrop]=false
+  [dismissable]=false
+>
+<div *ngIf="confirmContra.hasData()">
+  <p>{{ text }}</p>
+  <div class="action-btns">
+    <button type="button" class="btn btn-sm btn-primary btns-yes"
+          (click)="confirmContra.close(); callContra()">Yes</button>
+    <button type="button" class="btn btn-sm btn-primary btns-no"
+          (click)="confirmContra.close()">No</button>
+  </div>
+</div>
+</ngx-smart-modal>
+
+<ngx-smart-modal 
+  #confirmUnMatch
+  identifier="confirmUnMatch"
+  [customClass]="'nsm-dialog-animation-ttb'"
+  [closable]=false
+  [escapable]=false
+  [backdrop]=false
+  [dismissable]=false
+>
+<div *ngIf="confirmUnMatch.hasData()">
+  <p>{{ text }}</p>
+  <div class="action-btns">
+    <button type="button" class="btn btn-sm btn-primary btns-yes"
+          (click)="confirmUnMatch.close(); callUnMatch()">Yes</button>
+    <button type="button" class="btn btn-sm btn-primary btns-no"
+          (click)="confirmUnMatch.close()">No</button>
+  </div>
+</div>
+</ngx-smart-modal>
+
+<ngx-smart-modal 
+  #confirmUnGroupContra
+  identifier="confirmUnGroupContra"
+  [customClass]="'nsm-dialog-animation-ttb'"
+  [closable]=false
+  [escapable]=false
+  [backdrop]=false
+  [dismissable]=false
+>
+<div *ngIf="confirmUnGroupContra.hasData()">
+  <p>{{ text }}</p>
+  <div class="action-btns">
+    <button type="button" class="btn btn-sm btn-primary btns-yes"
+          (click)="confirmUnGroupContra.close(); callUnGroupContra()">Yes</button>
+    <button type="button" class="btn btn-sm btn-primary btns-no"
+          (click)="confirmUnGroupContra.close()">No</button>
+  </div>
+</div>
+</ngx-smart-modal>

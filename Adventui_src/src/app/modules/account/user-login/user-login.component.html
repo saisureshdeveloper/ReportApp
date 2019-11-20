@@ -1,0 +1,54 @@
+<div class="login-box">
+  <div class="login-logo">
+    <a><b><img style="height: 100px;width: 100%;" src="assets/images/dashboard.png"></b></a>
+  </div>
+  <div class="login-box-body">
+    <!-- <p class="login-box-msg">Sign in to start your session</p> -->
+    <div class="alert alert-danger" role="alert" *ngIf="invaidUser">
+      Your user name or password is incorrect!
+    </div>
+    <form novalidate #f="ngForm" (ngSubmit)="onSubmit()" [ngClass]="{
+      'was-validated': f.invalid && (f.dirty || f.touched),
+      'needs-validation': f.valid && (f.dirty || f.touched)
+    }">
+      <div class="form-group has-feedback" [ngClass]="{
+        'is-invalid': userName.invalid && (userName.dirty || userName.touched),
+        'is-valid': userName.valid && (userName.dirty || userName.touched)
+      }">
+        <input type="text" class="form-control" placeholder="User Name" autocomplete="off" name="userName" [(ngModel)]="model.UserId"
+          #userName="ngModel" required>
+        <div class="invalid-feedback" *ngIf="userName.errors && (userName.dirty || userName.touched)">
+          <p *ngIf="userName.errors.required">User Name is required</p>
+        </div>
+      </div>
+      <div class="form-group has-feedback" [ngClass]="{
+        'is-invalid': userName.invalid && (userName.dirty || userName.touched),
+        'is-valid': userName.valid && (userName.dirty || userName.touched)
+      }">
+        <input type="password" class="form-control" placeholder="Password" autocomplete="off" name="password"
+          [(ngModel)]="model.Password" #password="ngModel" required>
+        <div class="invalid-feedback" *ngIf="password.errors && (password.dirty || password.touched)">
+          <p *ngIf="password.errors.required">Password is required</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<footer class="main-footer" style="margin-left: 0px">
+    <div class="row">
+      <div class="col-md-6">
+        <a class="logo">
+          <span class="logo-lg"><b><img style="width: 60;height: 30px;margin-bottom: 4px;" src="assets/images/dashboard.png"></b></span>
+        </a>
+      </div>
+      <div class="col-md-6 footer-copyright">
+        <span><strong>Copyright &copy; 2018.</strong> All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+  

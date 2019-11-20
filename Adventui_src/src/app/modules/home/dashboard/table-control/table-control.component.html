@@ -1,0 +1,16 @@
+<div class="main-table-div">
+  <div class="search-icon">
+      <input type="text" id="filter-text-box" class="control-btns control-search" placeholder="Search..." [ngModel]="globalFilter" (keyup)="onGlobalFilterChanged($event.target.value)" />
+      <i [ngClass]="{'d-none': globalFilter?.length === 0}" class="fa fa-times-circle-o" (click)="clearSearch()"></i>
+  </div>
+<div>
+    <button class="fa fa-file-pdf-o control-btns" data-toggle="tooltip" data-placement="bottom" title="Export as PDF" (click)="exportAsPDF()" type="button"></button>
+    <button class="fa fa-file-excel-o control-btns" data-toggle="tooltip" data-placement="bottom" title="Export as Excel" (click)="exportAsXLSX()" type="button"></button>
+    <button class="fa fa-envelope-square control-btns" data-toggle="tooltip" data-placement="bottom" title="Email"  type="button"></button>
+    <button [ngClass]="{ 'd-none': this.selectedStatusInp === 'Tobeposted'}" class="fa fa-columns control-btns" data-toggle="tooltip" data-placement="bottom" title="Filter Columns" (click)="showColumnModal(content)" type="button"></button>
+  </div>
+</div>
+
+  <ng-template #content let-modal>
+      <app-select-grid-columns (dismiss)="modal.dismiss('closed')"></app-select-grid-columns>
+  </ng-template>

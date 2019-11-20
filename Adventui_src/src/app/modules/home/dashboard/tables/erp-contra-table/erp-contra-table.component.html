@@ -1,0 +1,42 @@
+<form [ngClass]="{ 'd-none': !visibleSmallGrids }">
+  <div class="form-div">
+  <div class="row btns-row">
+    <div class="col btns-row-inner">
+      <button type="button" class="btn btn-sm btn-primary btns-row-unGroupContra" (click)="unGroupContra();smartModalService.getModal('confirmUnGroupContra').open()">Un-Group Contra</button>
+      <button type="button" class="btn btn-sm btn-primary btns-row-reset" (click)="resetGridsSmall()">Reset</button>
+    </div>
+  </div>
+</div>
+</form>
+
+<div class="row major-div">
+  <div class="small-grids" [ngClass]="{ 'd-none': !visibleSmallGrids }">
+    <div class="col-lg-12 small-grids-div-1">
+      <ag-grid-angular id="intGridSmall" style="height: 160px;" class="ag-theme-balham" [rowData]="internalRowDataSmall" [columnDefs]="internalColumnDefsSmall"
+        [gridOptions]="gridOptionsSmall" (gridReady)="onInternalGridReadySmall($event)">
+      </ag-grid-angular>
+    </div>
+  </div>
+  <div class="main-grids-and-control">
+    <app-table-control [globalFilterInp]="''" [rowDataInp]="dataSource" [selectedStatusInp]="'ErpContra'">
+    </app-table-control>
+
+    <!-- main grids -->
+    <div class="row main-grids-row">
+      <div class="col-lg-12 main-grids-div-1">
+
+        <ag-grid-angular id="mainInt" style="height: 350px;" class="ag-theme-balham" [rowData]="internalRowData" [columnDefs]="internalColumnDefs"
+          [gridOptions]="gridOptions" [pagination]="true" (rowSelected)="onInternalRowSelected($event)" (gridReady)="onInternalGridReady($event)">
+        </ag-grid-angular>
+        <span class="paging-size-control paging-size-control-int">
+          <span class="control-page-size">Page Size:</span>
+          <select style="margin-left:5px;" class="control-select" (change)="changePageSizeInt($event.target.value)">
+            <option value="10">10</option>
+            <option value="25" selected>25</option>
+            <option value="50">50</option>
+          </select>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

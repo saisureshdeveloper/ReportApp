@@ -1,0 +1,75 @@
+.form-div {
+    align-items: center;
+    width: 100%;
+    margin: auto;
+    border-bottom: 5px solid #dcdfe2;
+    border-right: 5px solid #dcdfe2;
+    border-left: 1px solid #e6eaef;
+    border-radius: 2px;
+    border-top: 1px solid #e6eaef;
+    margin-bottom: 7px;
+    background-color: white;
+}
+.display-row {
+    text-align: left;
+    margin: 0;
+}
+.btns-row {
+    margin-bottom: 8px;
+    margin-top: 8px;
+    text-align: right;
+    margin-right: 8px;
+    padding-left: 0px;
+}
+.btns-row-match:disabled,
+.btns-row-posted:disabled,
+.btns-row-ungroup:disabled,
+.btns-row-reset:disabled,
+.btns-row-contra:disabled
+ {
+    background-color: grey;
+    border-color: grey;
+}
+.btns-row-inner {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.btns-row-match,
+.btns-row-contra {
+    padding: 3px;
+    font-size: 16px;
+    width: 55px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.btns-row-posted {
+    padding: 3px;
+    font-size: 16px;
+    width: 100px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.btns-row-ungroup {
+    padding: 3px;
+    font-size: 16px;
+    width: 75px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.btns-row-reset {
+    padding: 3px;
+    font-size: 16px;
+    width: 55px;
+    cursor: pointer;
+}
+.int-ext-text {
+    font-size: 0.9rem;
+}
+.int-panel,
+.ext-panel {
+    padding-right: 0;
+}
+.int-panel label,
+.ext-panel label {
+    padding-bottom: 0;
+}

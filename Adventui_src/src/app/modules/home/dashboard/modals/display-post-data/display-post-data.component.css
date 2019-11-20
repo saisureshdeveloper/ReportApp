@@ -1,0 +1,11 @@
+.btns-submit,
+.btns-cancel {
+    padding: 3px;
+    font-size: 16px;
+    width: 100px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.action-btns {
+    text-align: right;
+}

@@ -1,0 +1,33 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Post</h4>
+  <button type="button" class="btn btn-sm btn-primary my-1 ml-3" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div style="max-height: 400px;overflow: scroll;overflow-x: hidden;">
+    <div class="form-group">
+        <label for="accountnumber"> Account Number :</label>
+        <label id="accountnumber"> {{refnum}}</label>
+
+      <label for="account">Internal Account Number (Debit)*:</label>
+
+      
+      <select id="account" #account (change)="onSelectedInternalAccountId(account.value)">
+        <option *ngFor="let val of ineternalAccounts" [value]="val.Id">
+          {{val.AccounName}}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="comments">Comments :</label>
+      <input type="text" class="form-control" [(ngModel)]="comments" id="comments">
+    </div>
+  </div>
+</div>
+<div class="action-btns">
+  <button type="button" class="btn btn-sm btn-primary btns-submit"
+        (click)="save()">Submit</button>
+  <button type="button" class="btn btn-sm btn-primary btns-cancel"
+        (click)="close()">Cancel</button>
+</div>

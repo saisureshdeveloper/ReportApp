@@ -1,0 +1,20 @@
+<div class="main-grids-and-control">
+  <app-table-control [globalFilterInp]="''" [rowDataInp]="rowData" [selectedStatusInp]="'Tobeposted'">
+  </app-table-control>
+  <div class="row main-grids-row">
+    <div class="col-lg-12 main-grids-div-1">
+      <ag-grid-angular style="height: 348px;" class="ag-theme-balham" [rowData]="rowData" [columnDefs]="columnDefs" [gridOptions]="gridOptions"
+        [context]="context" [paginationPageSize]="paginationPageSize" [frameworkComponents]="frameworkComponents" [pagination]="true"
+        (rowSelected)="onRowSelected($event)" (gridReady)="onGridReady($event)">
+      </ag-grid-angular>
+      <span class="paging-size-control paging-size-control-ext">
+        <span class="control-page-size">Page Size:</span>
+        <select style="margin-left:5px;" class="control-select" (change)="changePageSize($event.target.value)">
+          <option value="10">10</option>
+          <option value="25" selected>25</option>
+          <option value="50">50</option>
+        </select>
+      </span>
+    </div>
+  </div>
+</div>

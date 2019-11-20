@@ -1,0 +1,28 @@
+.mat-card-header {
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.mat-card-content {
+    /* font-size: 28px;
+    font-weight: 800; */
+    /* background-color: teal;
+    height: 100px;
+    width: 100px; */
+}
+
+.input-group {
+    margin-left: 20px;
+}
+
+.label-header {
+    font-size: 18px;
+    margin-right: 12px;
+    font-weight: 600;
+}
+
+.spanhanding {
+    font-size: 18px;
+    font-weight: 600;
+    margin-left: 20px;
+}

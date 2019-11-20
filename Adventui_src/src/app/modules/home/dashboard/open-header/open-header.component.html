@@ -1,0 +1,28 @@
+<form class="form-major">
+  <div class="form-div">
+  <div class="row btns-row">
+    <div class="col btns-row-inner">
+      <button type="button" class="btn btn-sm btn-primary btns-row-contra" [disabled]="enableContraBtn()" (click)="smartModalService.getModal('confirmContra').open()">Contra</button>
+      <button type="button" class="btn btn-sm btn-primary btns-row-match" [disabled]="(openStats.internalRows <= 0 || openStats.externalRows <= 0)"
+        (click)="checkForMatch() ? smartModalService.getModal('confirmMatch').open() : smartModalService.getModal('confirmAutoPostModal').open()">Match</button>
+      <button type="button" class="btn btn-sm btn-primary btns-row-posted" [disabled]="openStats.internalRows != 0 || openStats.externalRows===0"
+        (click)="smartModalService.getModal('confirmPostRecords').open()">To Be Posted</button>
+      <button type="button" class="btn btn-sm btn-primary btns-row-ungroup" [disabled]="!openStats.canUnGroup" (click)="smartModalService.getModal('confirmUnGroup').open()">Un-Group</button>
+      <button type="button" class="btn btn-sm btn-primary btns-row-reset" (click)="resetGridsSmall()">Reset</button>
+    </div>
+  </div>
+</div>
+  <div class="row display-row">
+    <div class="col int-ext-text int-panel">
+      <label class="mr-2 col-form-label font-weight-bold">ERP</label>
+      <label class="mr-2 col-form-label">Rows: {{openStats.internalRows}}</label>
+      <label class="mr-2 col-form-label">Amount: {{openStats.internalAmount | formatter }}</label>
+    </div>
+    <div class="col int-ext-text ext-panel">
+      <label class="mr-2 col-form-label font-weight-bold">Bank</label>
+      <label class="mr-2 col-form-label">Rows: {{openStats.externalRows}}</label>
+      <label class="mr-2 col-form-label">Amount: {{openStats.externalAmount | formatter }}</label>
+    </div>
+  </div>
+
+</form>

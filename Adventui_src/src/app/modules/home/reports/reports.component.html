@@ -1,0 +1,1130 @@
+<section class="content" style="padding-top:0px">
+  <!-- <h3>Reports</h3> -->
+  <br>
+  <div>
+    <form class="form-inline">
+
+      <div class="form-group">
+        <div>
+          <span class="spanhanding">Relation</span>
+
+        </div>
+        <div class="input-group">
+          <select class="form-control select2 select2-hidden-accessible" id="BankName" name="BankName"
+            [(ngModel)]="BankName" (change)="onChange($event.target.value)" style="width: 100%;" tabindex="-1"
+            aria-hidden="true">
+            <option value=0>ALL</option>
+            <option *ngFor="let val of listbank;" value="{{val.relationshipId}}">{{val.relationshipName}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <label class="label-header">From : </label>
+          <input type="text" class="form-control" id="fromdate" placeholder="Select To Date" name="fromdate"
+            (ngModelChange)="fromdateSelection($event)" [(ngModel)]="fromdate" ngbDatepicker #d1="ngbDatepicker">
+          <div class="input-group-append">
+            <button style="background: #3c8dbc" id="btn1" class="btn btn-outline-secondary calendar"
+              (click)="d1.toggle()" type="button"></button>
+          </div>
+        </div>
+        <!-- <pre style="display: none">Model: {{fromdate? fromdateSelection(fromdate):false }}</pre> -->
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <label class="label-header">To : </label>
+          <input class="form-control" id="todate" placeholder="Select To Date" name="todate"
+            (ngModelChange)="todateSelection($event)" [(ngModel)]="todate" ngbDatepicker #d2="ngbDatepicker">
+          <div class="input-group-append">
+            <button style="background: #3c8dbc" id="btn2" class="btn btn-outline-secondary calendar"
+              (click)="d2.toggle()" type="button"></button>
+          </div>
+        </div>
+        <!-- <pre style="display: none">Model: {{todate? todateSelection(todate):false }}</pre> -->
+
+      </div>
+      <div class="form-group" *ngIf="false">
+        <div class="input-group">
+          <button (click)="exportAsXLSX()" class="btn btn-success" style="float:right;color: #fff;font-size: large;"><i class="fa fa-file-excel-o"></i> Export Matched Records</button>
+            
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- <pre style="display: none">Model: {{fromdate? fromdateSelection(fromdate):false }}</pre> -->
+
+  <hr>
+
+
+  <div class="row" *ngIf="flag">
+    <div class="col-lg-12">
+      <mat-card  class="box box-primary" style="    background: #ffff;
+        /* border: black 0px double; */
+        margin-top: 20px;">
+        <!-- <mat-card-header>
+          <mat-card-title>Summary </mat-card-title>
+        </mat-card-header> -->
+
+        <mat-card-content>
+            <mat-accordion>
+                <mat-expansion-panel [expanded]="true">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                     RECONCILIATION SUMMARY
+                    </mat-panel-title>
+                    <!-- <mat-panel-description>
+                                        Type your name and age
+                                    </mat-panel-description> -->
+                  </mat-expansion-panel-header>
+          <div class="row" style="margin-top: 40px;">
+
+            <div class="col-lg-2" style="margin: auto">
+              <rg-gauge-chart [canvasWidth]="canvasWidth" [needleValue]="ERPneedleValue" [centralLabel]="centralLabel"
+                [options]="ERPoptions" [name]="ERPNAME" [bottomLabel]="ERPbottomLabel"></rg-gauge-chart>
+
+            </div>
+            <div class="vl"></div>
+            <div class="col-lg-2" style="margin: auto">
+              <rg-gauge-chart [canvasWidth]="canvasWidth" [needleValue]="BANKneedleValue" [centralLabel]="centralLabel"
+                [options]="Bankoptions" [name]="BANKNAME" [bottomLabel]="BANKbottomLabel"></rg-gauge-chart>
+            </div>
+            <div class="vl"></div>
+            <div class="col-lg-7" style="margin-left: 40px;">
+              <label>Transaction count</label>
+
+              <div class="chart">
+                <div style="display: block">
+                  <canvas baseChart [chartType]="chartType" [datasets]="[
+                        {
+                           data: [ERPdetails?.response?.loaded_ERP,ERPdetails?.response?.Matched_ERP,ERPdetails?.response?.Grouped_Matched_ERP,ERPdetails?.response?.Manual_Match_ERP,ERPdetails?.response?.open_ERP,ERPdetails?.response?.Grouped_Open_ERP,ERPdetails?.response?.Contra_ERP], 
+                           label: 'ERP Statement',
+                           backgroundColor:'#2196F3	',
+                           pointHoverBorderColor:'#2196F3	',
+                           fillColor: '#2196F3',
+                          strokeColor: '#2196F3',
+                          pointColor: '#2196F3',
+                          pointStrokeColor: '#2196F3',
+                          pointHighlightFill: '#2196F3',
+                          pointHighlightStroke: '#2196F3',
+                          fill: false,
+                          pointBackgroundColor: 'rgb(87, 199, 212)',
+                  pointHoverBackgroundColor: 'rgb(87, 199, 212)',
+                  borderColor: 'rgb(87, 199, 212)',
+                  pointBorderColor: '#fff',
+                  pointHoverBorderColor: 'rgb(87, 199, 212)',
+                   hoverBackgroundColor: '#2196F3'
+                          },
+                           { data: [Bankdetails?.response?.loaded_Bank,Bankdetails?.response?.Matched_Bank,Bankdetails?.response?.Grouped_Matched_Bank,Bankdetails?.response?.Manual_Match_Bank,Bankdetails?.response?.open_Bank,Bankdetails?.response?.Grouped_Open_Bank,Bankdetails?.response?.Contra_Bank],
+                          label: 'BANK Statement',
+                          backgroundColor:'#4CAF50',
+                          borderColor:'#4CAF50' ,
+                           pointBorderColor:'#4CAF50' ,
+                           pointBackgroundColor:'#4CAF50' ,
+                           pointHoverBackgroundColor:'#4CAF50' ,
+                           pointHoverBorderColor:'#4CAF50',
+                           fillColor: '#4CAF50',
+                            strokeColor: '#4CAF50',
+                            pointColor: '#4CAF50',
+                            pointStrokeColor: '#4CAF50',
+                            pointHighlightFill: '#4CAF50',
+                            pointHighlightStroke:'#4CAF50' ,
+                            fill: false,
+                            pointHoverRadius: 5,
+                            pointHoverBackgroundColor: 'red',
+                            hoverBackgroundColor: '#4CAF50'
+                          
+                        }
+                        
+                          
+                           ]"
+                           [options]="{
+                            legend: {
+                                display: true,
+                                position: 'bottom',
+                                labels: {
+                                    fontColor: '#333'
+                                }
+                            }
+                        }"
+                           [labels]="chartLabels" (chartClick)="exportExcel($event)">
+                  </canvas>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+          </mat-expansion-panel>
+          </mat-accordion>
+
+
+        </mat-card-content>
+      </mat-card>
+
+
+    </div>
+
+
+    <div class="col-lg-6" *ngIf="false">
+      <!-- && ( fromdate?(getDateprocessing(val.date)>=getDateprocessing(fromdate|)):true) -->
+      <!-- *ngIf="selectedvalue?(selectedvalue == val.ComapnyName):true" -->
+
+      <mat-card  class="box box-primary" style="    background: #ffff;
+        /* border: black 0px double; */
+        margin-top: 20px;">
+        <mat-card-header>
+          <mat-card-title>Summary </mat-card-title>
+        </mat-card-header>
+        <div class="chart">
+          <div style="display: block">
+            <canvas baseChart [chartType]="chartType"
+              [datasets]="[{ data: [ERPdetails?.response?.loaded_ERP,ERPdetails?.response?.Matched_ERP,ERPdetails?.response?.Grouped_Matched_ERP,ERPdetails?.response?.Manual_Match_ERP,ERPdetails?.response?.open_ERP,ERPdetails?.response?.Grouped_Open_ERP,ERPdetails?.response?.Contra_ERP], label: 'ERP Statement' },{ data: [Bankdetails?.response?.loaded_Bank,Bankdetails?.response?.Matched_Bank,Bankdetails?.response?.Grouped_Matched_Bank,Bankdetails?.response?.Manual_Match_Bank,Bankdetails?.response?.open_Bank,Bankdetails?.response?.Grouped_Open_Bank,Bankdetails?.response?.Contra_Bank], label: 'BANK Statement' }]"
+              [labels]="chartLabels">
+            </canvas>
+          </div>
+        </div>
+        <mat-card-content>
+          <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Show Details
+                </mat-panel-title>
+                <!-- <mat-panel-description>
+                                    Type your name and age
+                                </mat-panel-description> -->
+              </mat-expansion-panel-header>
+              <div class="row">
+                <div class="col-sm-3 col-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i>ERP :
+                      {{ERPdetails?.response?.loaded_ERP}} </span>
+                    <br>
+                    <span class="description-percentage text-danger"><i class="fa fa-caret-left"></i> Bank
+                      :{{Bankdetails?.response?.loaded_Bank}} </span>
+                    <br>
+                    <!-- <h5 class="description-header">Show data of</h5> -->
+                    <span class="description-text">Loaded </span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+
+                <div class="col-sm-3 col-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i>ERP :
+                      {{ERPdetails?.response?.Matched_ERP}} </span>
+                    <br>
+                    <span class="description-percentage text-danger"><i class="fa fa-caret-left"></i> Bank
+                      :{{Bankdetails?.response?.Matched_Bank}} </span>
+                    <br>
+                    <!-- <h5 class="description-header">{{ poSubDate[i].Opened}}</h5> -->
+                    <span class="description-text">Matched</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-3 col-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i>ERP :
+                      {{ERPdetails?.response?.Grouped_Matched_ERP}} </span>
+                    <br>
+                    <span class="description-percentage text-danger"><i class="fa fa-caret-left"></i> Bank
+                      :{{Bankdetails?.response?.Grouped_Matched_Bank}} </span>
+                    <br>
+                    <!-- <h5 class="description-header">{{ poSubDate[i].Closed}}</h5> -->
+                    <span class="description-text"> Grouped Matched</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-3 col-6">
+                  <div class="description-block">
+                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i>ERP :
+                      {{ERPdetails?.response?.Manual_Match_ERP}} </span>
+                    <br>
+                    <span class="description-percentage text-danger"><i class="fa fa-caret-left"></i> Bank
+                      :{{Bankdetails?.response?.Manual_Match_Bank}} </span>
+                    <br>
+                    <!-- <h5 class="description-header">{{ poSubDate[i].Cancelled}}</h5> -->
+                    <span class="description-text">Manually Matched</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <div class="col-sm-3 col-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i>ERP :
+                      {{ERPdetails?.response?.open_ERP}} </span>
+                    <br>
+                    <span class="description-percentage text-danger"><i class="fa fa-caret-left"></i> Bank
+                      :{{Bankdetails?.response?.open_Bank}} </span>
+                    <br>
+                    <!-- <h5 class="description-header">Show data of</h5> -->
+                    <span class="description-text"> Opened </span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <div class="col-sm-3 col-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i>ERP :
+                      {{ERPdetails?.response?.Grouped_Open_ERP}} </span>
+                    <br>
+                    <span class="description-percentage text-danger"><i class="fa fa-caret-left"></i> Bank
+                      :{{Bankdetails?.response?.Grouped_Open_Bank}} </span>
+                    <br>
+                    <!-- <h5 class="description-header">Show data of</h5> -->
+                    <span class="description-text">Groupe Opened </span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <div class="col-sm-3 col-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i>ERP :
+                      {{ERPdetails?.response?.Contra_ERP}} </span>
+                    <br>
+                    <span class="description-percentage text-danger"><i class="fa fa-caret-left"></i> Bank
+                      :{{Bankdetails?.response?.Contra_Bank}} </span>
+                    <br>
+                    <!-- <h5 class="description-header">Show data of</h5> -->
+                    <span class="description-text">Contra</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-lg-6" *ngIf="false">
+      <!-- && ( fromdate?(getDateprocessing(val.date)>=getDateprocessing(fromdate|)):true) -->
+      <!-- *ngIf="selectedvalue?(selectedvalue == val.ComapnyName):true" -->
+
+      <mat-card  class="box box-primary" style="    background: #ffff;
+        /* border: black 0px double; */
+        margin-top: 20px;">
+        <mat-card-header>
+          <mat-card-title>Summary </mat-card-title>
+        </mat-card-header>
+        <div class="chart">
+          <div style="display: block">
+            <canvas baseChart [chartType]="piechart"
+              [datasets]="[{ data: [ERPdetails?.response?.loaded_ERP,ERPdetails?.response?.Matched_ERP,ERPdetails?.response?.Grouped_Matched_ERP,ERPdetails?.response?.Manual_Match_ERP,ERPdetails?.response?.open_ERP,ERPdetails?.response?.Grouped_Open_ERP,ERPdetails?.response?.Contra_ERP], label: 'ERP Statement' },{ data: [Bankdetails?.response?.loaded_Bank,Bankdetails?.response?.Matched_Bank,Bankdetails?.response?.Grouped_Matched_Bank,Bankdetails?.response?.Manual_Match_Bank,Bankdetails?.response?.open_Bank,Bankdetails?.response?.Grouped_Open_Bank,Bankdetails?.response?.Contra_Bank], label: 'BANK Statement' }]"
+              [labels]="chartLabels">
+            </canvas>
+          </div>
+        </div>
+        <mat-card-content>
+          <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Show Details
+                </mat-panel-title>
+                <!-- <mat-panel-description>
+                                    Type your name and age
+                                </mat-panel-description> -->
+              </mat-expansion-panel-header>
+              <div class="row">
+                <div class="col-sm-3 col-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i>ERP :
+                      {{ERPdetails?.response?.loaded_ERP}} </span>
+                    <br>
+                    <span class="description-percentage text-danger"><i class="fa fa-caret-left"></i> Bank
+                      :{{Bankdetails?.response?.loaded_Bank}} </span>
+                    <br>
+                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i>Credit ERP :
+                      {{ERPdetails?.response?.Credit_loaded_ERP}} </span>
+                    <br>
+                    <span class="description-percentage text-danger"><i class="fa fa-caret-left"></i>Debit Bank
+                      :{{Bankdetails?.response?.Debitloaded_Bank}} </span>
+                    <br>
+                    <!-- <h5 class="description-header">Show data of</h5> -->
+                    <span class="description-text">Loaded </span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+
+                <div class="col-sm-3 col-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i>ERP :
+                      {{ERPdetails?.response?.Matched_ERP}} </span>
+                    <br>
+                    <span class="description-percentage text-danger"><i class="fa fa-caret-left"></i> Bank
+                      :{{Bankdetails?.response?.Matched_Bank}} </span>
+                    <br>
+                    <!-- <h5 class="description-header">{{ poSubDate[i].Opened}}</h5> -->
+                    <span class="description-text">Matched</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-3 col-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i>ERP :
+                      {{ERPdetails?.response?.Grouped_Matched_ERP}} </span>
+                    <br>
+                    <span class="description-percentage text-danger"><i class="fa fa-caret-left"></i> Bank
+                      :{{Bankdetails?.response?.Grouped_Matched_Bank}} </span>
+                    <br>
+                    <!-- <h5 class="description-header">{{ poSubDate[i].Closed}}</h5> -->
+                    <span class="description-text"> Grouped Matched</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-3 col-6">
+                  <div class="description-block">
+                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i>ERP :
+                      {{ERPdetails?.response?.Manual_Match_ERP}} </span>
+                    <br>
+                    <span class="description-percentage text-danger"><i class="fa fa-caret-left"></i> Bank
+                      :{{Bankdetails?.response?.Manual_Match_Bank}} </span>
+                    <br>
+                    <!-- <h5 class="description-header">{{ poSubDate[i].Cancelled}}</h5> -->
+                    <span class="description-text">Manually Matched</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <div class="col-sm-3 col-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i>ERP :
+                      {{ERPdetails?.response?.open_ERP}} </span>
+                    <br>
+                    <span class="description-percentage text-danger"><i class="fa fa-caret-left"></i> Bank
+                      :{{Bankdetails?.response?.open_Bank}} </span>
+                    <br>
+                    <!-- <h5 class="description-header">Show data of</h5> -->
+                    <span class="description-text"> Opened </span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <div class="col-sm-3 col-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i>ERP :
+                      {{ERPdetails?.response?.Grouped_Open_ERP}} </span>
+                    <br>
+                    <span class="description-percentage text-danger"><i class="fa fa-caret-left"></i> Bank
+                      :{{Bankdetails?.response?.Grouped_Open_Bank}} </span>
+                    <br>
+                    <!-- <h5 class="description-header">Show data of</h5> -->
+                    <span class="description-text">Groupe Opened </span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <div class="col-sm-3 col-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i>ERP :
+                      {{ERPdetails?.response?.Contra_ERP}} </span>
+                    <br>
+                    <span class="description-percentage text-danger"><i class="fa fa-caret-left"></i> Bank
+                      :{{Bankdetails?.response?.Contra_Bank}} </span>
+                    <br>
+                    <!-- <h5 class="description-header">Show data of</h5> -->
+                    <span class="description-text">Contra</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+
+
+
+
+  </div>
+
+  
+  <div class="row" *ngIf="flag">
+    <div class="col-lg-12" >
+      <mat-card  class="box box-primary" style="    background: #ffff;
+        /* border: black 0px double; */
+        margin-top: 20px;">
+        <!-- <mat-card-header>
+          <mat-card-title>Transaction category wise open item </mat-card-title>
+        </mat-card-header> -->
+
+        <mat-card-content>
+            <mat-accordion>
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                     CLASSIFICATION BY CATEGORY
+                    </mat-panel-title>
+                    <!-- <mat-panel-description>
+                                        Type your name and age
+                                    </mat-panel-description> -->
+                  </mat-expansion-panel-header>
+          
+          <div class="row" style="margin-top: 40px;">
+            <!-- <h3>By category</h3> -->
+            <div style="width: 430px;margin: auto;">
+              <label>ERP Transaction</label>
+              <div class="chart">
+                <div style="display: block">
+                  <canvas baseChart [datasets]="[{
+                          label: 'Colors',
+                          data: erptransactioncount,
+                          backgroundColor: [
+                          'F44336',
+                          '#396AB1',
+                          '#DA7C30',
+                          '#3E9651',
+                          '#CC2529',
+                          '#535154',
+                          '#6B4C9A',
+                          '#922428',
+                          '#948B3D',
+                          '#39CCCC',
+                          '#01FF70',
+                          '#85144b',
+                          '#F012BE',
+                          '#3D9970',
+                          '#111111',
+                          '#AAAAAA'
+                          ]
+                           
+                        }]" [labels]="erptransactionname" 
+                        [options]="{
+                          legend: {
+                              display: true,
+                              position: 'right',
+                              labels: {
+                                  fontColor: '#333'
+                              }
+                          }
+                      }"
+                        [chartType]="piechart">
+                  </canvas>
+                </div>
+              </div>
+            </div>
+            <!-- backgroundColor: ['#0074D9', '#FF4136', '#2ECC40', '#FF851B', '#7FDBFF', '#B10DC9', '#FFDC00', '#001f3f', '#39CCCC', '#01FF70', '#85144b', '#F012BE', '#3D9970', '#111111', '#AAAAAA'] -->
+
+            <div style="width: 430px;margin: auto;" *ngIf="banktransactioncount.length>0">
+              <label>BANK Transaction</label>
+              <div class="chart">
+                <div style="display: block">
+                  <canvas baseChart [chartType]="piechart" [datasets]="[{
+                        label: 'Colors',
+                        data: banktransactioncount,
+                        backgroundColor: [
+                        'F44336',
+        '#396AB1',
+        '#DA7C30',
+        '#3E9651',
+        '#CC2529',
+        '#535154',
+        '#6B4C9A',
+        '#922428',
+        '#948B3D',
+        '#39CCCC',
+        '#01FF70',
+        '#85144b',
+        '#F012BE',
+        '#3D9970',
+        '#111111',
+        '#AAAAAA'
+        ]
+                      }]"  [options]="{
+                        legend: {
+                            display: true,
+                            position: 'right',
+                            labels: {
+                                fontColor: '#333'
+                            }
+                        }
+                    }" [labels]="banktransactionname">
+                  </canvas>
+                </div>
+              </div>
+            </div>
+
+
+           
+            
+          </div>
+           
+          </mat-expansion-panel>
+          </mat-accordion>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+    
+
+
+
+
+  </div>
+
+  
+  <div class="row" *ngIf="flag">
+      <div class="col-lg-12" >
+        <mat-card  class="box box-primary" style="    background: #ffff;
+          /* border: black 0px double; */
+          margin-top: 20px;">
+          <!-- <mat-card-header>
+            <mat-card-title>Transaction category wise open item </mat-card-title>
+          </mat-card-header> -->
+  
+          <mat-card-content>
+              <mat-accordion>
+                  <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                      OPEN ITEM AGEING
+                      </mat-panel-title>
+                      <!-- <mat-panel-description>
+                                          Type your name and age
+                                      </mat-panel-description> -->
+                    </mat-expansion-panel-header>
+                    <div class="row" style="margin-top: 40px">
+                      <div class="col-lg-4">
+                        <!-- && ( fromdate?(getDateprocessing(val.date)>=getDateprocessing(fromdate|)):true) -->
+                        <!-- *ngIf="selectedvalue?(selectedvalue == val.ComapnyName):true" -->
+                  
+                          <div class="chart">
+                            <div style="display: block">
+                              <canvas baseChart [chartType]="chartType" [datasets]="[
+                                          { data:
+                                            [ERPopenAgingdetails?.series1,ERPopenAgingdetails?.series2,ERPopenAgingdetails?.series3,ERPopenAgingdetails?.series4,ERPopenAgingdetails?.series5,ERPopenAgingdetails?.series6],
+                                            label: 'ERP Open Items  agingStatement' ,
+                                            backgroundColor:'#2196F3'
+                                          },
+                                          { data:
+                                            [BankopenAgingdetails?.series1,BankopenAgingdetails?.series2,BankopenAgingdetails?.series3,BankopenAgingdetails?.series4,BankopenAgingdetails?.series5,BankopenAgingdetails?.series6],
+                                            label: 'Bank Open Items  aging Statement' ,
+                                            backgroundColor:'#4CAF50'
+                                          }
+                                        ]" [labels]="openItemsageingLabels" (chartHover)="chartHovered($event)"
+                                (chartClick)="chartClicked($event)">
+                              </canvas>
+                            </div>
+                          </div>
+                      
+                            
+                        
+                      </div>
+                      <div class="col-lg-4">
+                        <div class="chart">
+                          <div style="display: block">
+                            <canvas baseChart [chartType]="linechart" [datasets]="[
+                                        { data:TransactionERPcount,
+                                          label: 'ERP Open Items  agingStatement' ,
+                                          backgroundColor:'#2196F3'
+                                        }
+                                       
+                                      ]" [labels]="TransactionERPname" (chartHover)="chartHovered($event)"
+                              (chartClick)="chartClicked($event)">
+                            </canvas>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-4">
+                        <div class="chart">
+                          <div style="display: block">
+                            <canvas baseChart [chartType]="linechart" [datasets]="[
+                                        { data:TransactionBANKcount,
+                                          label: 'Bank Open Items  aging Statement' ,
+                                          backgroundColor:'#4CAF50'
+                                        }
+                                      ]" [labels]="TransactionBANKname" (chartHover)="chartHovered($event)"
+                              (chartClick)="chartClicked($event)">
+                            </canvas>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+            
+            </mat-expansion-panel>
+            </mat-accordion>
+  
+          </mat-card-content>
+        </mat-card>
+      </div>
+      
+  
+  
+  
+  
+    </div>
+
+    <div class="row" *ngIf="flag">
+      <div class="col-lg-12" >
+        <mat-card  class="box box-primary" style="    background: #ffff;
+          /* border: black 0px double; */
+          margin-top: 20px;">
+          <!-- <mat-card-header>
+            <mat-card-title>Transaction category wise open item </mat-card-title>
+          </mat-card-header> -->
+  
+          <mat-card-content>
+              <mat-accordion>
+                  <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                       BALANCE
+                      </mat-panel-title>
+                      <!-- <mat-panel-description>
+                                          Type your name and age
+                                      </mat-panel-description> -->
+                    </mat-expansion-panel-header>
+                    <div class="row" style="margin-top: 40px">
+                      <div class="col-lg-6">
+                          <h2>OPENING BALANCE</h2>
+
+                        <div class="chart">
+                          <div style="display: block">
+                            <canvas baseChart [chartType]="linechart" [datasets]="[
+                                        { data:openbalancedata,
+                                          backgroundColor:'#2196F3',
+                                          label:'Open balance'
+                                        }
+                                      ]" [labels]="openbalancelabel">
+                            </canvas>
+                          </div>
+                        </div>
+                  </div>
+                  <div class="col-lg-6">
+                      <h2>CLOSEING BALANCE</h2>
+
+                    <div class="chart">
+                      <div style="display: block">
+                        <canvas baseChart [chartType]="linechart" [datasets]="[
+                                    { data:closebalancedata,
+                                      backgroundColor:'#2196F3',
+                                      label:'Closed balance'
+                                    }
+                                  ]" [labels]="closebalancelabel">
+                        </canvas>
+                      </div>
+                    </div>
+              </div>
+              <div class="col-lg-12">
+                  <h2>BALANCE SUMMARY</h2>
+                  
+                  <div class="row" >
+                      
+                          <div class="col-sm-6 col-6">
+                            <div class="description-block border-right">
+                              <span class="description-percentage text-success">ERP Loaded Credit :
+                                {{balancesummary?.erp_loaded_credit}} </span>
+                              <br>
+                              <span class="description-percentage text-danger">ERP Loaded Debit
+                                :{{balancesummary?.erp_loaded_debit}} </span>
+                              <br>
+                              <!-- <h5 class="description-header">Show data of</h5> -->
+                             
+                            </div>
+                            <div class="description-block border-right">
+                                <span class="description-percentage text-success">ERP Open Credit :
+                                  {{balancesummary?.erp_open_credit}} </span>
+                                <br>
+                                <span class="description-percentage text-danger">ERP open Debit
+                                  :{{balancesummary?.erp_open_debit}} </span>
+                                <br>
+                                <!-- <h5 class="description-header">Show data of</h5> -->
+                               
+                              </div>
+                              <div class="description-block border-right">
+                                  <span class="description-percentage text-success">ERP processed Credit :
+                                    {{balancesummary?.erp_processed_credit}} </span>
+                                  <br>
+                                  <span class="description-percentage text-danger">ERP Processed Debit
+                                    :{{balancesummary?.erp_processed_debit}} </span>
+                                  <br>
+                                  <!-- <h5 class="description-header">Show data of</h5> -->
+                                  
+                                </div>
+                            <!-- /.description-block -->
+                          </div>
+                         <div class="col-sm-6 col-6">
+                            <div class="description-block border-right">
+                              <span class="description-percentage text-success">Bank Loaded Credit :
+                                {{balancesummary?.bank_loaded_credit}} </span>
+                              <br>
+                              <span class="description-percentage text-danger">Bank Loaded Debit
+                                :{{balancesummary?.bank_loaded_debit}} </span>
+                              <br>
+                              <!-- <h5 class="description-header">Show data of</h5> -->
+                             
+                            </div>
+                            <div class="description-block border-right">
+                                <span class="description-percentage text-success">Bank Open Credit :
+                                  {{balancesummary?.bank_open_credit}} </span>
+                                <br>
+                                <span class="description-percentage text-danger">Bank open Debit
+                                  :{{balancesummary?.bank_open_debit}} </span>
+                                <br>
+                                <!-- <h5 class="description-header">Show data of</h5> -->
+                               
+                              </div>
+                              <div class="description-block border-right">
+                                  <span class="description-percentage text-success">Bank processed Credit :
+                                    {{balancesummary?.bank_processed_credit}} </span>
+                                  <br>
+                                  <span class="description-percentage text-danger">Bank Processed Debit
+                                    :{{balancesummary?.bank_processed_debit}} </span>
+                                  <br>
+                                  <!-- <h5 class="description-header">Show data of</h5> -->
+                                  
+                                </div>
+                            <!-- /.description-block -->
+                          </div>
+                          
+                      
+                  </div>
+            </div>
+                    </div>
+                   
+            
+            </mat-expansion-panel>
+            </mat-accordion>
+  
+          </mat-card-content>
+        </mat-card>
+      </div>
+      
+  
+  
+  
+  
+    </div>
+    <div class="row" *ngIf="flag">
+        <div class="col-lg-12 "  >
+          <mat-card  class="box box-primary" style="    background: #ffff;
+            /* border: black 0px double; */
+            margin-top: 20px;">
+            <!-- <mat-card-header>
+              <mat-card-title>Transaction category wise open item </mat-card-title>
+            </mat-card-header> -->
+    
+            <mat-card-content>
+                <mat-accordion>
+                    <mat-expansion-panel>
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                         BRS
+                        </mat-panel-title>
+                        <!-- <mat-panel-description>
+                                            Type your name and age
+                                        </mat-panel-description> -->
+                      </mat-expansion-panel-header>
+                      
+                      <div class="col-lg-12 brs">
+                          <div class="input-group" style="margin-left: 790px; margin-top: 20px;">
+                              <button (click)="BRSexportAsXLSX()" class="btn btn-success" style="float:right;color: #fff;font-size: large;"><i class="fa fa-file-excel-o"></i> BRS Records</button>
+                                
+                            </div>
+                          <!-- && ( fromdate?(getDateprocessing(val.date)>=getDateprocessing(fromdate|)):true) -->
+                          <!-- *ngIf="selectedvalue?(selectedvalue == val.ComapnyName):true" -->
+                    
+                            <div class="chart">
+                              <div style="display: block">
+                                <canvas baseChart [chartType]="chartType" [datasets]="[
+                                            { data:BRSData,
+                                              backgroundColor:'#2196F3',
+                                              label:'BRS'
+                                            }
+                                          ]" [labels]="BRSlabel">
+                                </canvas>
+                              </div>
+                            </div>
+                           
+                              
+                    
+                        </div>
+              
+              </mat-expansion-panel>
+              </mat-accordion>
+    
+            </mat-card-content>
+          </mat-card>
+        </div>
+        
+    
+    
+    
+    
+      </div>
+
+
+  <div class="row" *ngIf="false" style="">
+
+    <div class="col-lg-4">
+      <!-- && ( fromdate?(getDateprocessing(val.date)>=getDateprocessing(fromdate|)):true) -->
+      <!-- *ngIf="selectedvalue?(selectedvalue == val.ComapnyName):true" -->
+
+      <mat-card  class="box box-primary" style="    background: #ffff;
+            /* border: black 0px double; */
+            margin-top: 20px;">
+        <mat-card-header>
+          <mat-card-title>Open items</mat-card-title>
+        </mat-card-header>
+        <div class="chart">
+          <div style="display: block">
+            <canvas baseChart [chartType]="chartType" [datasets]="[
+                        { data:
+                          [ERPopendetails?.loaded_ERP ,ERPopendetails?.Open_DEBIT,ERPopendetails?.Open_CREDIT,ERPopendetails?.CHEQUE_DEBIT,ERPopendetails?.CHEQUE_CREDIT],
+                          label: 'ERP Open Items Statement' ,
+                          backgroundColor:'#2196F3'
+                        },
+                        { data:
+                          [Bankopendetails?.loaded_BANK ,Bankopendetails?.Open_DEBIT,Bankopendetails?.Open_CREDIT,Bankopendetails?.CHEQUE_DEBIT,Bankopendetails?.CHEQUE_CREDIT],
+                          label: 'Bank Open Items Statement' ,
+                          backgroundColor:'#4CAF50'
+                        }
+                      ]" [labels]="openItemsLabels">
+            </canvas>
+          </div>
+        </div>
+        <mat-card-content>
+          <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Show Details
+                </mat-panel-title>
+                <!-- <mat-panel-description>
+                                    Type your name and age
+                                </mat-panel-description> -->
+              </mat-expansion-panel-header>
+              <div class="row">
+                <div class="col-sm-4 col-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i>ERP :
+                      {{ERPopendetails?.loaded_ERP}} </span>
+                    <br>
+                    <span class="description-percentage text-danger"><i class="fa fa-caret-left"></i> Bank
+                      :{{Bankopendetails?.loaded_BANK}} </span>
+                    <br>
+                    <!-- <h5 class="description-header">Show data of</h5> -->
+                    <span class="description-text"> Open items </span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <div class="col-sm-4 col-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i>ERP :
+                      {{ERPopendetails?.Open_DEBIT}} </span>
+                    <br>
+                    <span class="description-percentage text-danger"><i class="fa fa-caret-left"></i> Bank
+                      :{{Bankopendetails?.Open_DEBIT}} </span>
+                    <br>
+                    <!-- <h5 class="description-header">Show data of</h5> -->
+                    <span class="description-text">Debit </span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <div class="col-sm-4 col-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i>ERP :
+                      {{ERPopendetails?.Open_CREDIT}} </span>
+                    <br>
+                    <span class="description-percentage text-danger"><i class="fa fa-caret-left"></i> Bank
+                      :{{Bankopendetails?.Open_CREDIT}} </span>
+                    <br>
+                    <!-- <h5 class="description-header">Show data of</h5> -->
+                    <span class="description-text">Credit</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <div class="col-sm-4 col-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i>ERP :
+                      {{ERPopendetails?.CHEQUE_DEBIT}} </span>
+                    <br>
+                    <span class="description-percentage text-danger"><i class="fa fa-caret-left"></i> Bank
+                      :{{Bankopendetails?.CHEQUE_DEBIT}} </span>
+                    <br>
+                    <!-- <h5 class="description-header">Show data of</h5> -->
+                    <span class="description-text">Cheque Debit</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <div class="col-sm-4 col-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i>ERP :
+                      {{ERPopendetails?.CHEQUE_CREDIT}} </span>
+                    <br>
+                    <span class="description-percentage text-danger"><i class="fa fa-caret-left"></i> Bank
+                      :{{Bankopendetails?.CHEQUE_CREDIT}} </span>
+                    <br>
+                    <!-- <h5 class="description-header">Show data of</h5> -->
+                    <span class="description-text">Cheque Credit</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-lg-4">
+      <!-- && ( fromdate?(getDateprocessing(val.date)>=getDateprocessing(fromdate|)):true) -->
+      <!-- *ngIf="selectedvalue?(selectedvalue == val.ComapnyName):true" -->
+
+      <mat-card  class="box box-primary" style="    background: #ffff;
+            /* border: black 0px double; */
+            margin-top: 20px;">
+        <mat-card-header>
+          <mat-card-title>Open items Ageing</mat-card-title>
+        </mat-card-header>
+        <div class="chart">
+          <div style="display: block">
+            <canvas baseChart [chartType]="chartType" [datasets]="[
+                        { data:
+                          [ERPopenAgingdetails?.series1,ERPopenAgingdetails?.series2,ERPopenAgingdetails?.series3,ERPopenAgingdetails?.series4,ERPopenAgingdetails?.series5,ERPopenAgingdetails?.series6],
+                          label: 'ERP Open Items  agingStatement' ,
+                          backgroundColor:'#2196F3'
+                        },
+                        { data:
+                          [BankopenAgingdetails?.series1,BankopenAgingdetails?.series2,BankopenAgingdetails?.series3,BankopenAgingdetails?.series4,BankopenAgingdetails?.series5,BankopenAgingdetails?.series6],
+                          label: 'Bank Open Items  aging Statement' ,
+                          backgroundColor:'#4CAF50'
+                        }
+                      ]" [labels]="openItemsageingLabels" (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)">
+            </canvas>
+          </div>
+        </div>
+        <mat-card-content>
+          <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Show Details
+                </mat-panel-title>
+                <!-- <mat-panel-description>
+                                    Type your name and age
+                                </mat-panel-description> -->
+              </mat-expansion-panel-header>
+              <div class="row">
+                <div class="col-sm-4 col-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i>ERP :
+                      {{ERPopenAgingdetails?.series1}} </span>
+                    <br>
+                    <span class="description-percentage text-danger"><i class="fa fa-caret-left"></i> Bank
+                      :{{BankopenAgingdetails?.series1}} </span>
+                    <br>
+                    <!-- <h5 class="description-header">Show data of</h5> -->
+                    <span class="description-text"> 0-15 </span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <div class="col-sm-4 col-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i>ERP :
+                      {{ERPopenAgingdetails?.series2}} </span>
+                    <br>
+                    <span class="description-percentage text-danger"><i class="fa fa-caret-left"></i> Bank
+                      :{{BankopenAgingdetails?.series2}} </span>
+                    <br>
+                    <!-- <h5 class="description-header">Show data of</h5> -->
+                    <span class="description-text">15-30 </span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <div class="col-sm-4 col-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i>ERP :
+                      {{ERPopenAgingdetails?.series3}} </span>
+                    <br>
+                    <span class="description-percentage text-danger"><i class="fa fa-caret-left"></i> Bank
+                      :{{BankopenAgingdetails?.series3}} </span>
+                    <br>
+                    <!-- <h5 class="description-header">Show data of</h5> -->
+                    <span class="description-text">30-45</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <div class="col-sm-4 col-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i>ERP :
+                      {{ERPopenAgingdetails?.series4}} </span>
+                    <br>
+                    <span class="description-percentage text-danger"><i class="fa fa-caret-left"></i> Bank
+                      :{{BankopenAgingdetails?.series4}} </span>
+                    <br>
+                    <!-- <h5 class="description-header">Show data of</h5> -->
+                    <span class="description-text">45-60</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <div class="col-sm-4 col-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i>ERP :
+                      {{ERPopenAgingdetails?.series5}} </span>
+                    <br>
+                    <span class="description-percentage text-danger"><i class="fa fa-caret-left"></i> Bank
+                      :{{BankopenAgingdetails?.series5}} </span>
+                    <br>
+                    <!-- <h5 class="description-header">Show data of</h5> -->
+                    <span class="description-text">60-90</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <div class="col-sm-4 col-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i>ERP :
+                      {{ERPopenAgingdetails?.series6}} </span>
+                    <br>
+                    <span class="description-percentage text-danger"><i class="fa fa-caret-left"></i> Bank
+                      :{{BankopenAgingdetails?.series6}} </span>
+                    <br>
+                    <!-- <h5 class="description-header">Show data of</h5> -->
+                    <span class="description-text">90-above</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-lg-4">
+      <!-- && ( fromdate?(getDateprocessing(val.date)>=getDateprocessing(fromdate|)):true) -->
+      <!-- *ngIf="selectedvalue?(selectedvalue == val.ComapnyName):true" -->
+
+      <mat-card  class="box box-primary" style="    background: #ffff;
+              /* border: black 0px double; */
+              margin-top: 20px;">
+        <mat-card-header>
+          <mat-card-title>EOD BANK BALANCE( DAY WISE ) </mat-card-title>
+        </mat-card-header>
+        <div class="chart">
+          <div style="display: block">
+            <canvas baseChart [chartType]="chartType" [datasets]="[
+                          { data:balancesheetdata,
+                            label: 'ERP Open Items Statement' ,
+                            backgroundColor:'#2196F3'
+                          }
+                        ]" [labels]="balancesheetlabel">
+            </canvas>
+          </div>
+        </div>
+        <mat-card-content>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+
+
+  </div>
+  <!-- <div class="row" *ngIf="flag">
+    <transaction [bankid]="BankName" [fromdate]="fromdate" [todate]="todate"></transaction>
+  </div> -->
+
+</section>

@@ -1,0 +1,51 @@
+<form class="form-inline">
+  <div class="form-group">
+    <label for="fromDate" class="mr-2">Reconciliation Type </label>
+    <div class="input-group" class="mr-2">
+      <select #relationship (change)="onSelectedRelationshipId(relationship)">
+        <!-- <option [value]="-1">All</option> -->
+        <option [value]="r.Id" *ngFor="let r of relationships">{{r.RelationShipName}}</option>
+    </select>
+
+    </div>
+
+    <!-- <label for="fromDate" class="mr-2">Counter Party Type </label>
+    <div class="input-group" class="mr-2">
+      <select>
+        <option>All</option>
+      </select>
+    </div> -->
+
+
+    <!-- Please disabled as of now. WIll require next time. code related to functionality is not removed -->
+    
+    <!-- <label for="fromDate" class="mr-2">From Date</label>
+    <div class="input-group">
+      <input class="form-control" style="width: 110px;height: 31px;background-color: white;" readonly placeholder="yyyy-mm-dd" name="from"
+        [(ngModel)]="fromDate" ngbDatepicker #fd="ngbDatepicker" id="fromDate"
+        (ngModelChange)="dateChange($event, 'fromDate')">
+      <div class="input-group-append">
+        <button class="btn btn-sm fa fa-calendar" (click)="fd.toggle()" type="button"></button>
+      </div>
+    </div> -->
+
+    <!-- Please disabled as of now. WIll require next time. code related to functionality is not removed -->
+
+    <!-- <label for="toDate" class="ml-3 mr-2">To Date</label>
+    <div class="input-group">
+      <input class="form-control" style="width: 110px;height: 31px;background-color: white;" readonly placeholder="yyyy-mm-dd" name="to"
+        [(ngModel)]="toDate" ngbDatepicker #td="ngbDatepicker" id="toDate"
+        (ngModelChange)="dateChange($event, 'toDate')">
+      <div class="input-group-append">
+        <button class="btn btn-sm fa fa-calendar" (click)="td.toggle()" type="button"></button>
+      </div>
+    </div> -->
+
+    <button type="submit" class="btn btn-sm btn-primary my-1 ml-3" (click)="search(true)">Search</button>
+
+    <!-- Please disabled as of now. WIll require next time. code related to functionality is not removed -->
+    
+    <!-- <button type="submit" class="btn btn-sm btn-primary  my-1 ml-3" (click)="reset()">Reset</button> -->
+    <!-- <button type="submit" class="btn btn-sm btn-primary my-1 ml-3" (click)="search()">Refresh</button> -->
+  </div>
+</form>

@@ -1,0 +1,46 @@
+
+.small-grids {
+    display: flex;
+    width: 97%;
+    margin-bottom: 20px !important;
+    margin: auto;
+    padding: 8px;
+    border-bottom: 5px solid #dcdfe2;
+    border-right: 5px solid #dcdfe2;
+    border-left: 1px solid #e6eaef;
+    border-radius: 2px;
+    border-top: 1px solid #e6eaef;
+    background-color: white;
+}
+
+.small-grids-div-1,
+.main-grids-div-1 {
+    padding: 0 8px 0 0;
+}
+
+.small-grids-div-2,
+.main-grids-div-2 {
+    padding: 0 0 0 8px;
+}
+.main-grids-and-control {
+    width: 97%;
+    margin-bottom: 20px !important;
+    margin: auto;
+    padding: 8px;
+    border-bottom: 5px solid #dcdfe2;
+    border-right: 5px solid #dcdfe2;
+    border-left: 1px solid #e6eaef;
+    border-radius: 2px;
+    border-top: 1px solid #e6eaef;
+    background-color: white;
+}
+.main-grids-row {
+    margin: 0;
+}
+.paging-size-control {
+    position: absolute;
+    bottom: 7px;
+    font-weight: bolder !important;
+    color: rgba(0, 0, 0, 0.54);
+    font: 400 12px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}

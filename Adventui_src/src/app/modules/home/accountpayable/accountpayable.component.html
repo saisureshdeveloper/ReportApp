@@ -1,0 +1,277 @@
+<section class="content" style="padding-top:0px">
+    <h3>Account Payable</h3>
+    <hr>
+    <div>
+        <form class="form-inline">
+
+            <div class="form-group">
+                <div>
+                    <span class="spanhanding">Company Name :</span>
+
+                </div>
+                <div class="input-group">
+
+
+                    <select class="form-control select2 select2-hidden-accessible" id="CompanyName" name="CompanyName" [(ngModel)]="CompanyName" (change)="onChange($event.target.value,'companyName')" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                        <option value=0>Select</option>
+                      <!-- <option *ngFor="let val of PoData;" >Alabama</option> -->
+                  <option *ngFor="let val of PoData;" value="{{val.ComapnyName}}" >{{val.ComapnyName}}</option>
+                 
+                </select>
+                </div>
+
+                <div>
+                    <span class="spanhanding">Location :</span>
+
+                </div>
+                <div class="input-group">
+                    <!-- <label class="label-header">Location</label> -->
+
+                    <select class="form-control select2 select2-hidden-accessible" id="location" name="location" [(ngModel)]="location" (change)="onChange($event.target.value,'location')" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                  <option value=0>Select</option>
+                  <option value="TamilNadu" >TamilNadu</option>
+                  <option value="Bangalore" >Bangalore</option>
+                  <option value="Kerala" >Kerala</option>
+                  
+                </select>
+                </div>
+                <div class="input-group">
+                    <label class="label-header">From : </label>
+                    <input class="form-control" id="fromdate" placeholder="select From Date" name="fromdate" [(ngModel)]="fromdate" ngbDatepicker #d1="ngbDatepicker">
+                    <div class="input-group-append">
+                        <button style="background: #3c8dbc" id="btn1" class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"></button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <label class="label-header">To : </label>
+                    <input class="form-control" id="todate" placeholder="Select To Date" name="todate" [(ngModel)]="todate" ngbDatepicker #d2="ngbDatepicker">
+                    <div class="input-group-append">
+                        <button style="background: #3c8dbc" id="btn2" class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- <pre>Model: {{ parseDate(fromdate) }}</pre> -->
+
+    </div>
+
+
+    <!-- <hr/> -->
+
+
+
+    <div class="row">
+        <div *ngFor="let val of PoData;let i=index">
+            <div class="col-lg-4" *ngIf="((selectedvalue != 0)?(selectedvalue == val.ComapnyName):true)  && ((location != 0)?(location == val.location):true) && ( parseDate(fromdate)?(parseDateapi(val.date)>=parseDate(fromdate)):true) && ( parseDate(todate)?(parseDateapi(val.date)<=parseDate(todate)):true)">
+                <!-- && ( fromdate?(getDateprocessing(val.date)>=getDateprocessing(fromdate|)):true) -->
+                <!-- *ngIf="selectedvalue?(selectedvalue == val.ComapnyName):true" -->
+
+                <mat-card style="    background: #ffff;
+        /* border: black 0px double; */
+        margin-top: 20px;width: 380px">
+                    <mat-card-header>
+                        <mat-card-title><img src="{{val.url}}" alt="Smiley face" width="42" height="42"> {{ val.ComapnyName}}</mat-card-title>
+                    </mat-card-header>
+                    <div class="chart">
+                        <div style="display: block">
+                            <canvas baseChart [datasets]="pushData[i]" [labels]="pieChartLabels" [chartType]="pieChartType"></canvas>
+                        </div>
+                    </div>
+                    <mat-card-content>
+                        <!-- {{ PoData.length }} -->
+
+                        <!-- <ul>
+                          <li>
+                              Total Orders : {{ poSubDate[i].Total}}
+                          </li>
+                          <li>
+                              Opened Orders : {{ poSubDate[i].Opened}}
+                          </li>
+                          <li>
+                              Closed Orders : {{ poSubDate[i].Closed}}
+                          </li>
+                          <li>
+                              Total Orders : {{ poSubDate[i].Cancelled}}
+                          </li>
+                      </ul> -->
+                        <div class="row">
+
+                            <div class="col-sm-3 col-6">
+                                <div class="description-block border-right">
+                                    <span class="description-percentage text-warning"><i class="fa fa-caret-left"></i> {{ poSubDate[i].Opened}}</span>
+                                    <br>
+                                    <!-- <h5 class="description-header">{{ poSubDate[i].Opened}}</h5> -->
+                                    <span class="description-text">Opened</span>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-3 col-6">
+                                <div class="description-block border-right">
+                                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i> {{ poSubDate[i].Closed}}</span>
+                                    <br>
+                                    <!-- <h5 class="description-header">{{ poSubDate[i].Closed}}</h5> -->
+                                    <span class="description-text">Closed</span>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-3 col-6">
+                                <div class="description-block">
+                                    <span class="description-percentage text-danger"><i class="fa fa-caret-down"></i> {{ poSubDate[i].Cancelled}}</span>
+                                    <br>
+                                    <!-- <h5 class="description-header">{{ poSubDate[i].Cancelled}}</h5> -->
+                                    <span class="description-text">Cancelled</span>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                            <div class="col-sm-3 col-6">
+                                <div class="description-block border-right">
+                                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i> {{poSubDate[i].Total}}</span>
+                                    <br>
+                                    <!-- <h5 class="description-header">Show data of</h5> -->
+                                    <span class="description-text">Total </span>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+            <!-- <div class="col-lg-4" *ngIf="!(((selectedvalue != 0)?(selectedvalue == val.ComapnyName):true)  && ((location != 0)?(location == val.location):true))">
+                No Record Found
+            </div> -->
+        </div>
+
+    </div>
+
+
+</section>
+
+
+
+
+
+<!-- <section class="content" style="padding-top:0px">
+  <br>
+  <div class="row">
+    <div class="col-lg-3" > 
+      <mat-card style="    background: red;
+      /* border: black 0px double; */
+      margin-top: 20px;"> 
+      <mat-card-header>
+        <mat-card-title>Total Orders</mat-card-title>
+      </mat-card-header>
+       <mat-card-content>
+             {{ PoData.length }}
+         </mat-card-content> 
+      </mat-card>
+      </div>
+      <div class="col-lg-3" > 
+        <mat-card style="    background: peru;
+        /* border: black 0px double; */
+        margin-top: 20px;"> 
+        <mat-card-header>
+          <mat-card-title> Orders Closed</mat-card-title>
+        </mat-card-header>
+         <mat-card-content>
+               {{poClosed}}
+           </mat-card-content> 
+        </mat-card>
+        </div>
+       
+          <div class="col-lg-3" > 
+            <mat-card style="    background: orange;
+            /* border: black 0px double; */
+            margin-top: 20px;"> 
+            <mat-card-header>
+              <mat-card-title> Orders opened </mat-card-title>
+            </mat-card-header>
+             <mat-card-content>
+                   {{poOpened}}
+               </mat-card-content> 
+            </mat-card>
+            </div>
+            <div class="col-lg-3" > 
+              <mat-card style="    background: pink;
+              /* border: black 0px double; */
+              margin-top: 20px;"> 
+              <mat-card-header>
+                <mat-card-title> Orders Cancelled </mat-card-title>
+              </mat-card-header>
+               <mat-card-content>
+                     {{poCancelled}}
+                 </mat-card-content> 
+              </mat-card>
+              </div>
+
+  </div>
+  <mat-card style="    margin-top: 20px;
+  background: #fff;
+  /* width: 105%; */
+  color: black;">
+  <h2>Account Payable Graph</h2>
+  <hr>
+  <div class="row pt-1">
+    <div class="col-lg-6 col-xs-6">
+      <div class="small-box">
+        <div class="inner">
+          <div>
+           
+          <canvas id="myChart" ></canvas>
+          
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  
+</mat-card>
+</section> -->
+
+
+
+<!-- <div class="row" style="background-color: #daebf5">
+    <div class="col-lg-6">
+      Account Payable
+    </div>
+  </div>
+  <div class="row pt-1">
+    <div class="col-lg-4 col-xs-6">
+      <div class="small-box">
+        <div class="inner">
+          <div>
+           
+          <canvas id="myChart" ></canvas>
+          
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="col-lg-12" >
+      <app-po-table (showflag)="GettingSelectedRow($event)"></app-po-table>
+    </div>
+    <div class="col-lg-12" *ngIf="show"> 
+      <mat-card style="    background: white;
+      /* border: black 0px double; */
+      margin-top: 20px;"> 
+      <mat-card-header>
+        <mat-card-title>PO Payment Schedule</mat-card-title>
+      </mat-card-header>
+       <mat-card-content>
+             Description
+         </mat-card-content> 
+      </mat-card>
+      </div> -->
+<!-- </section> -->
+<!-- <mat-card>
+  <h2>Account Payable</h2>
+  <hr>
+
+  <app-po-table></app-po-table>
+</mat-card> -->

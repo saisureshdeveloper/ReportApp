@@ -1,0 +1,32 @@
+.class-for-open {
+    padding-top: 0 !important;
+}
+.matched-classed {
+    padding: 0;
+}
+.btn-post:disabled{
+    background-color: grey;
+    border-color: grey;
+}
+.form-div {
+    align-items: center;
+    width: 97%;
+    margin: auto;
+    border-bottom: 5px solid #dcdfe2;
+    border-right: 5px solid #dcdfe2;
+    border-left: 1px solid #e6eaef;
+    border-radius: 2px;
+    border-top: 1px solid #e6eaef;
+    margin-bottom: 7px;
+    background-color: white;
+}
+
+.btns-row {
+    text-align: right;
+    margin-right: 8px;
+}
+
+.btns-row-inner {
+    padding-left: 0px;
+    padding-right: 0px;
+}
